@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../resources/provider/user_provider.dart';
+import '../../models/response/user/registration_response.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -19,6 +21,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
     String email = emailController.text;
     String password = passwordController.text;
     String passwordConfirmation = passwordConfirmationController.text;
+    if(password != passwordConfirmation){
+      print("password not mached");
+    }else{
+      print("creating user");
+      userProvider.createNewUser(name, username, email, password).then((result){
+        SessionResponse sessionResponse = result;
+      });
+    }
   }
 
 
