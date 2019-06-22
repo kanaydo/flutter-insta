@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../utils/const.dart';
 import '../../resources/blocs/post_bloc.dart';
 import '../../models/response/post_response.dart';
 import '../../models/base_model/post.dart';
+import '../../models/base_model/user.dart';
 import '../feed/show_post_page.dart';
+import '../../utils/session_manager.dart';
+import '../../resources/provider/user_provider.dart';
 
 class PostList extends StatefulWidget {
   @override
@@ -12,11 +14,24 @@ class PostList extends StatefulWidget {
 
 class _PostListState extends State<PostList> {
 
+  int userId = 0;
+  User user;
+
   @override
   void initState() {
     super.initState();
-    postBloc.fecthUserPosts(5);
-    print(username);
+    sessionManager.getSessionUserId().then((result){
+      setState(() {
+        userId = result;
+      });
+      userProvider.fetchUserDetail(userId).then((result){
+        setState(() {
+          user = result.user;
+        });
+      });
+      postBloc.fecthUserPosts(userId);
+
+    });
   }
 
 
@@ -61,12 +76,12 @@ class _PostListState extends State<PostList> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                             fit: BoxFit.fill,
-                            image: NetworkImage(avatar)
+                            image: NetworkImage(user.avatar)
                         )
                       ),
                     ),
                     SizedBox(width: 8.0,),
-                    Expanded(child: Text(username)),
+                    Expanded(child: Text(user.username)),
                     Icon(Icons.more_vert)
                   ],
                 ),
@@ -116,7 +131,7 @@ class _PostListState extends State<PostList> {
                           color: Colors.black,
                         ),
                         children: <TextSpan>[
-                          new TextSpan(text: username, style: new TextStyle(fontWeight: FontWeight.bold)),
+                          new TextSpan(text: user.username, style: new TextStyle(fontWeight: FontWeight.bold)),
                           new TextSpan(text: " "),
                           new TextSpan(text: "${posts[index].caption}"), 
                         ],

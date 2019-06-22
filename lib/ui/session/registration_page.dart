@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../resources/provider/user_provider.dart';
 import '../../models/response/user/registration_response.dart';
+import 'login.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -27,6 +28,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
       print("creating user");
       userProvider.createNewUser(name, username, email, password).then((result){
         SessionResponse sessionResponse = result;
+        if(sessionResponse.status == 200){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+        }
       });
     }
   }

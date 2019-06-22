@@ -3,6 +3,7 @@ import '../../resources/blocs/post_bloc.dart';
 import '../../models/response/feed_response.dart';
 import '../../models/base_model/feed.dart';
 import '../profile/profile_page.dart';
+import '../../utils/session_manager.dart';
 
 class FeedPage extends StatefulWidget {
   @override
@@ -11,10 +12,17 @@ class FeedPage extends StatefulWidget {
 
 class _FeedPageState extends State<FeedPage> {
 
+  int userId = 0;
+
   @override
   void initState() {
     super.initState();
-    postBloc.fetchUserFeed(5);
+    sessionManager.getSessionUserId().then((result){
+      setState(() {
+        userId = result;
+      });
+      postBloc.fetchUserFeed(userId);
+    });
   }
 
   @override
