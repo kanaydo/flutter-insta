@@ -1,5 +1,10 @@
+import 'dart:io';
+import 'package:async/async.dart';
+import 'package:path/path.dart';
+
 import '../../utils/const.dart';
 import 'package:http/http.dart' show Client;
+import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../models/response/post_response.dart';
 import '../../models/response/feed_response.dart';
@@ -46,4 +51,21 @@ class PostProvider {
     }
   }
 
+  Future<PostResponse> createNewPost(int userId, String caption, File image) async {
+    var stream = new http.ByteStream(DelegatingStream.typed(image.openRead()));
+    var length = await image.length();
+    var uri = Uri.parse("http://$base_url/api/v1/posts");
+    var request = http.MultipartRequest("POST", uri);
+
+    var multipartFile = new http.MultipartFile('image', stream, length, filename: basename(image.path));
+    request.files.add(multipartFile);
+    request.fields['user_id'] = "$userId";
+    request.fields['caption'] = caption;
+    final response = await request.send();
+    if(response.statusCode == 200){
+      print(response.toString());
+    }
+  }
 }
+
+final postProvider = PostProvider();

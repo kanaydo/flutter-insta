@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../models/base_model/user.dart';
 import '../../utils/session_manager.dart';
 import '../../resources/provider/user_provider.dart';
+import '../../resources/provider/post_provider.dart';
 
 class UploadPage extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class _UploadPageState extends State<UploadPage> {
   File _image;
   int userId = 0;
   User user;
+  final captionController = TextEditingController();
 
   Future getImageCamera() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
@@ -28,6 +30,11 @@ class _UploadPageState extends State<UploadPage> {
     setState(() {
       _image = image;
     });
+  }
+
+  createPost(){
+    String caption = captionController.text;
+    postProvider.createNewPost(userId, caption, _image);
   }
 
   @override
@@ -109,6 +116,7 @@ class _UploadPageState extends State<UploadPage> {
   @override
   Widget build(BuildContext context) {
    return Scaffold(
+     backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Row(
@@ -128,7 +136,7 @@ class _UploadPageState extends State<UploadPage> {
               Icons.send,
               color: Colors.black,
             ),
-            onTap: () {},
+            onTap: createPost,
           ),
           SizedBox(width: 20)
         ],
@@ -160,12 +168,12 @@ class _UploadPageState extends State<UploadPage> {
                 ),
               ),
             )
-            : createNewPost(_image),
+            : createPostForm(_image),
       ),
     );
   }
 
-  Widget createNewPost(File image){
+  Widget createPostForm(File image){
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
@@ -187,16 +195,14 @@ class _UploadPageState extends State<UploadPage> {
           SizedBox(width: 8.0,),
           Expanded(
             child: TextField(
-              //onChanged: sessionBloc.passChanged,
               keyboardType: TextInputType.text,
               autofocus: false,
-              //controller: passController,
-              obscureText: true,
               decoration: new InputDecoration(
                 contentPadding: EdgeInsets.all(8.0),
                 border: null,
                 hintText: 'enter caption..',
               ),
+              controller: captionController,
             ),
           ),
           SizedBox(width: 8.0,),
