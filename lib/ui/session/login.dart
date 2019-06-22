@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nested_navigation/utils/session_manager.dart';
 import 'registration_page.dart';
 import '../../resources/provider/user_provider.dart';
 import '../../app.dart';
@@ -19,6 +20,8 @@ class _LoginPageState extends State<LoginPage> {
     userProvider.loginUser(username, password).then((result){
       print(result.message);
       if(result.status == 200){
+        sessionManager.setSessionUserId(result.user.id);
+        sessionManager.setLoginStatus(true);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => App()),
