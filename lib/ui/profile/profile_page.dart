@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import '../../resources/blocs/user_bloc.dart';
 import '../../resources/blocs/post_bloc.dart';
 import '../../models/response/user_profile_response.dart';
+import '../../utils/session_manager.dart';
 import 'post_grid.dart';
 import 'post_list.dart';
 import 'info_widget.dart';
+import 'edit_profile_page.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -14,15 +16,20 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
 
   int index = 0;
+  int userId = 0;
 
   @override
   void initState() {
     super.initState();
-    userBloc.fecthUserInfo(5);
-    postBloc.fecthUserPosts(5);
+    sessionManager.getSessionUserId().then((result){
+      setState(() {
+        userId = result;
+      });
+      userBloc.fecthUserInfo(userId);
+      postBloc.fecthUserPosts(userId);
+    });
   }
 
-  
   List<Widget> _widgets = [
     PostGrid(),
     PostList(),
@@ -129,7 +136,16 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Expanded(
                                   child: Container(
                                     child: InkWell(
-                                      onTap: () => print('hello'),
+                                      onTap: () {
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfilePage(
+                                          userId: snapshot.data.user.id,
+                                          name: snapshot.data.user.name,
+                                          username: snapshot.data.user.username,
+                                          email: snapshot.data.user.email,
+                                          avatar: snapshot.data.user.avatar,
+                                          bio: snapshot.data.user.caption,
+                                        )));
+                                      },
                                       child: Container(
                                         decoration: BoxDecoration(
                                           border: Border.all(color: Colors.grey),
