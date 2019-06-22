@@ -59,6 +59,7 @@ class UserProvider {
   Future<RelationResponse> fecthUserFollowing(int userId) async {
     final response = await client.get("http://$base_url/api/v1/users/$userId/following");
     if(response.statusCode == 200){
+      print(response.body);
       return RelationResponse.fromJson(json.decode(response.body));
     }else{
       throw Exception("Failed fetch user following");

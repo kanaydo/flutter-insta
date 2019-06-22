@@ -33,9 +33,7 @@ class _FollowingPageState extends State<FollowingPage> {
           padding: EdgeInsets.symmetric(horizontal: 16.0),
           child: snapshot.hasData ?
           userList(snapshot.data.relations) :
-          Center(
-            child: CircularProgressIndicator(),
-          ),
+          Text(userId.toString()),
         );
       }
     );
@@ -92,4 +90,5 @@ class _FollowingPageState extends State<FollowingPage> {
       ),
     );
   }
+
 }

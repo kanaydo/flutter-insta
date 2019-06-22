@@ -22,7 +22,7 @@ class UserBloc {
   }
 
   final _userFollowingFetcher = PublishSubject<RelationResponse>();
-  Observable<RelationResponse> get userFollowingStream => _userFollowersFetcher.stream;
+  Observable<RelationResponse> get userFollowingStream => _userFollowingFetcher.stream;
   fetchUserFollowing(int userId) async {
     RelationResponse relationResponse = await userProvider.fecthUserFollowing(userId);
     _userFollowingFetcher.sink.add(relationResponse);
