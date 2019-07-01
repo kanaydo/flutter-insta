@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'comment_page.dart';
+import '../profile/profile_page.dart';
 import '../../resources/blocs/post_bloc.dart';
+import '../../resources/provider/post_provider.dart';
 import '../../models/response/feed_response.dart';
 import '../../models/base_model/feed.dart';
-import '../profile/profile_page.dart';
 import '../../utils/session_manager.dart';
-import 'comment_page.dart';
+
+
+
 
 class FeedPage extends StatefulWidget {
   @override
@@ -14,6 +18,8 @@ class FeedPage extends StatefulWidget {
 class _FeedPageState extends State<FeedPage> {
 
   int userId = 0;
+  IconData likeIcon = Icons.favorite_border;
+  Color likeStatusColor = Colors.black;
 
   @override
   void initState() {
@@ -30,6 +36,35 @@ class _FeedPageState extends State<FeedPage> {
   void dispose() {
     super.dispose();
     postBloc.dispose();
+  }
+
+  likePostFromImage(int postId){
+    postProvider.likePost(postId, userId).then((result){
+      if(result.status == 200){
+        setState(() {
+          likeIcon = Icons.favorite;
+          likeStatusColor = Colors.red;
+        });
+      }
+    });
+  }
+
+  likePost(int postId){
+    if(likeIcon == Icons.favorite_border){
+      postProvider.likePost(postId, userId).then((result){
+        if(result.status == 200){
+          setState(() {
+            likeIcon = Icons.favorite;
+            likeStatusColor = Colors.red;
+          });
+        }
+      });
+    }else{
+      setState(() {
+        likeIcon = Icons.favorite_border;
+        likeStatusColor = Colors.black;
+      });
+    }
   }
 
   @override
@@ -160,21 +195,30 @@ class _FeedPageState extends State<FeedPage> {
               ],
             ),
           ),
-          Container(
-            height: 200.0,
-            decoration: new BoxDecoration(
-              image: new DecorationImage(
-                fit: BoxFit.fitWidth,
-                alignment: FractionalOffset.center,
-                image: new NetworkImage(feed.image),
-              )
+          GestureDetector(
+            onDoubleTap: () => likePostFromImage(feed.id),
+            child: Container(
+              height: 200.0,
+              decoration: new BoxDecoration(
+                image: new DecorationImage(
+                  fit: BoxFit.fitWidth,
+                  alignment: FractionalOffset.center,
+                  image: new NetworkImage(feed.image),
+                )
+              ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: <Widget>[
-                Icon(Icons.favorite_border),
+                GestureDetector(
+                  onTap: () => likePost(feed.id),
+                    child: Icon(
+                    likeIcon,
+                    color: likeStatusColor,
+                  ),
+                ),
                 SizedBox(width: 8.0,),
                 InkWell(
                   onTap: (){
@@ -214,7 +258,7 @@ class _FeedPageState extends State<FeedPage> {
           Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 8),
             child: Text(
-              feed.createdAt.substring(0, 10),
+              feed.postAge(),
               style: TextStyle(
                 fontSize: 10.0,
                 color: Colors.grey

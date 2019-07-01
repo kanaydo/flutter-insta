@@ -37,4 +37,11 @@ class Post {
   String get createdAt => _createdAt;
   String get updatedAt => _updatedAt;
   String get image => "http://$base_url$_image";
+
+  String postAge(){
+    final created = DateTime.parse(_createdAt);
+    final now = DateTime.now();
+    final count = now.difference(created).inDays;
+    return '${count.toString()} days';
+  }
 }

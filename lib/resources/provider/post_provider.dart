@@ -11,6 +11,7 @@ import '../../models/response/feed_response.dart';
 import '../../models/response/post/show.dart';
 import '../../models/response/post/explore.dart';
 import '../../models/response/post/comment_detail.dart';
+import '../../models/response/post/like_response.dart';
 
 class PostProvider {
  
@@ -58,6 +59,18 @@ class PostProvider {
       return PostCommentsResponse.fromJson(json.decode(response.body));
     }else{
       throw Exception('Failed to fecth post comments');
+    }
+  }
+
+  Future<LikeResponse> likePost(int postId, int userId) async {
+    Map<String, String> body = {
+      "user_id": '$userId',
+    };
+    final response = await client.post('http://$base_url/api/v1/posts/$userId/like', body: body);
+    if(response.statusCode == 200 || response.statusCode == 422){
+      return LikeResponse.fromJson(json.decode(response.body));
+    }else{
+      throw Exception('Failed to like post');
     }
   }
 

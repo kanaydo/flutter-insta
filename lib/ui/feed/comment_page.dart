@@ -70,21 +70,33 @@ class _CommentPageState extends State<CommentPage> {
                 width: 8.0,
               ),
               Expanded(
-                child: RichText(
-                  text: new TextSpan(
-                    style: new TextStyle(
-                      fontSize: 14.0,
-                      color: Colors.black,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    RichText(
+                      text: new TextSpan(
+                        style: new TextStyle(
+                          fontSize: 14.0,
+                          color: Colors.black,
+                        ),
+                        children: <TextSpan>[
+                          new TextSpan(
+                              text: postCommentsResponse.user.username,
+                              style:
+                                  new TextStyle(fontWeight: FontWeight.bold)),
+                          new TextSpan(text: " "),
+                          new TextSpan(text: "${postCommentsResponse.post.caption}"),
+                        ],
+                      ),
                     ),
-                    children: <TextSpan>[
-                      new TextSpan(
-                          text: postCommentsResponse.user.username,
-                          style:
-                              new TextStyle(fontWeight: FontWeight.bold)),
-                      new TextSpan(text: " "),
-                      new TextSpan(text: "${postCommentsResponse.post.caption}"),
-                    ],
-                  ),
+                    Text(
+                      postCommentsResponse.post.postAge(),
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 10
+                      ),
+                    )
+                  ],
                 ),
               ),
             ],

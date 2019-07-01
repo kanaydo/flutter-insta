@@ -41,4 +41,15 @@ class Feed {
   String get updatedAt => _updatedAt;
   String get image => "http://$base_url$_image";
   User get user => _user;
+
+  String postAge(){
+    final created = DateTime.parse(_createdAt);
+    final now = DateTime.now();
+    final count = now.difference(created).inDays;
+    if(count == 0){
+      return '${now.difference(created).inMinutes.toString()} minutes ago';
+    }else{
+      return '${count.toString()} days ago';
+    }
+  }
 }
