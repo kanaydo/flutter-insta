@@ -1,6 +1,7 @@
 # Flutter Insta
 
 An Instagram clone written in Flutter using rails REST API as backend service.
+<img src="./screenshoots/feed.png" height="400" alt="Screenshot"/>
 
 ## Getting Started
 

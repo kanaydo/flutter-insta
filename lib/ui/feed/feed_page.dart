@@ -26,6 +26,12 @@ class _FeedPageState extends State<FeedPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    postBloc.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -75,7 +81,6 @@ class _FeedPageState extends State<FeedPage> {
           SizedBox(width: 20)
         ],
         elevation: 0,
-        bottom: PreferredSize(child: Container(color: Colors.grey, height: 1.0,), preferredSize: Size.fromHeight(-10.0)),
       ),
       body: ListView(
         children: <Widget>[
@@ -214,5 +219,4 @@ class _FeedPageState extends State<FeedPage> {
       ),
     );
   }
-
 }

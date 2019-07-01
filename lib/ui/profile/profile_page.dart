@@ -25,8 +25,8 @@ class _ProfilePageState extends State<ProfilePage> {
       setState(() {
         userId = result;
       });
-      userBloc.fecthUserInfo(userId);
-      postBloc.fecthUserPosts(userId);
+      userBloc.fecthUserInfo(5);
+      postBloc.fecthUserPosts(5);
     });
   }
 
@@ -80,7 +80,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               SizedBox(width: 20)
             ],
-            elevation: 1,
+            elevation: 0,
           ),
           body: ListView(
             children: <Widget>[
@@ -100,7 +100,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                             image: NetworkImage(snapshot.data.user.avatar)
                         )
                       ),

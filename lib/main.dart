@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nested_navigation/ui/session/login.dart';
-import 'app.dart';
+import 'homepage.dart';
 import 'utils/session_manager.dart';
 
 void main() => runApp(MyApp());
@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: isLoggedIn ? App() : LoginPage(),
+      home: isLoggedIn ? HomePage() : LoginPage(),
     );
   }
 }

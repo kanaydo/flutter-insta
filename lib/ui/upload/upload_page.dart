@@ -141,7 +141,6 @@ class _UploadPageState extends State<UploadPage> {
           SizedBox(width: 20)
         ],
         elevation: 0,
-        bottom: PreferredSize(child: Container(color: Colors.grey, height: 1.0,), preferredSize: Size.fromHeight(-10.0)),
       ),
       body: Container(
         child: _image == null

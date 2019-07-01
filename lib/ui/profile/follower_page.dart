@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nested_navigation/models/response/user/relation_button.dart';
 import '../../resources/blocs/user_bloc.dart';
 import '../../models/response/user/relation_response.dart';
 import '../../utils/session_manager.dart';
@@ -30,7 +31,6 @@ class _FollowerPageState extends State<FollowerPage> {
       stream: userBloc.userFollowersStream,
       builder: (context, snapshot) {
         return Container(
-          padding: EdgeInsets.symmetric(horizontal: 16.0),
           child: snapshot.hasData ?
           userList(snapshot.data.relations) :
           Center(
@@ -52,7 +52,7 @@ class _FollowerPageState extends State<FollowerPage> {
 
   Widget userItem(User user){
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       child: Row(
         children: <Widget>[
           Container(
@@ -86,6 +86,10 @@ class _FollowerPageState extends State<FollowerPage> {
                 )
               ],
             ),
+          ),
+          RelationButton(
+            userId: userId,
+            user: user,
           ),
           Icon(Icons.more_vert)
         ],

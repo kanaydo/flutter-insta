@@ -30,7 +30,6 @@ class _FollowingPageState extends State<FollowingPage> {
       stream: userBloc.userFollowingStream,
       builder: (context, snapshot) {
         return Container(
-          padding: EdgeInsets.symmetric(horizontal: 16.0),
           child: snapshot.hasData ?
           userList(snapshot.data.relations) :
           Text(userId.toString()),
@@ -50,7 +49,7 @@ class _FollowingPageState extends State<FollowingPage> {
 
   Widget userItem(User user){
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       child: Row(
         children: <Widget>[
           Container(
@@ -83,6 +82,21 @@ class _FollowingPageState extends State<FollowingPage> {
                   ),
                 )
               ],
+            ),
+          ),
+          ButtonTheme(
+            height: 25.0,
+            child: RaisedButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            color: Colors.white,
+              onPressed: () {},
+              child: Text(
+                "following",
+                style: TextStyle(
+                ),
+              ),
             ),
           ),
           Icon(Icons.more_vert)

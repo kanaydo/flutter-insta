@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nested_navigation/utils/session_manager.dart';
 import 'registration_page.dart';
 import '../../resources/provider/user_provider.dart';
-import '../../app.dart';
+import '../../homepage.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
         sessionManager.setLoginStatus(true);
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => App()),
+          MaterialPageRoute(builder: (context) => HomePage()),
         );
       }
     });
