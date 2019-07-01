@@ -4,6 +4,7 @@ import '../../models/response/feed_response.dart';
 import '../../models/base_model/feed.dart';
 import '../profile/profile_page.dart';
 import '../../utils/session_manager.dart';
+import 'comment_page.dart';
 
 class FeedPage extends StatefulWidget {
   @override
@@ -175,7 +176,12 @@ class _FeedPageState extends State<FeedPage> {
               children: <Widget>[
                 Icon(Icons.favorite_border),
                 SizedBox(width: 8.0,),
-                Icon(Icons.comment),
+                InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => CommentPage(postId: feed.id,)));
+                  },
+                  child: Icon(Icons.comment)
+                ),
                 SizedBox(width: 8.0,),
                 Icon(Icons.send),
                 Expanded(

@@ -10,6 +10,7 @@ import '../../models/response/post_response.dart';
 import '../../models/response/feed_response.dart';
 import '../../models/response/post/show.dart';
 import '../../models/response/post/explore.dart';
+import '../../models/response/post/comment_detail.dart';
 
 class PostProvider {
  
@@ -48,6 +49,15 @@ class PostProvider {
       return ExploreResponse.fromJson(json.decode(response.body));
     }else{
       throw Exception("Failed to explore posts");
+    }
+  }
+
+  Future<PostCommentsResponse> fecthPostComments(int postId) async {
+    final response = await client.get('http://$base_url/api/v1/posts/$postId/comments');
+    if(response.statusCode == 200){
+      return PostCommentsResponse.fromJson(json.decode(response.body));
+    }else{
+      throw Exception('Failed to fecth post comments');
     }
   }
 

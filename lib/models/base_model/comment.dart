@@ -21,4 +21,11 @@ class Comment {
   String get comment => _comment;
   String get createdAt => _createdAt;
   String get updatedAt => _updatedAt;
+
+  String commentTime(){
+    final birthday = DateTime.parse(_createdAt);
+    final date2 = DateTime.now();
+    final difference = date2.difference(birthday).inDays;
+    return '${difference.toString()} days';
+  }
 }

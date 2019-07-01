@@ -3,6 +3,7 @@ import '../../models/response/post_response.dart';
 import '../../models/response/feed_response.dart';
 import '../../models/response/post/show.dart';
 import '../../models/response/post/explore.dart';
+import '../../models/response/post/comment_detail.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PostBloc {
@@ -37,6 +38,13 @@ class PostBloc {
     _explorePostFetcher.sink.add(exploreResponse);
   }
 
+  final _postCommentsFecther = PublishSubject<PostCommentsResponse>();
+  Observable<PostCommentsResponse> get postCommentsStream => _postCommentsFecther.stream;
+  fetchPostComments(int postId) async {
+    PostCommentsResponse postCommentsResponse = await postProvider.fecthPostComments(postId);
+    _postCommentsFecther.sink.add(postCommentsResponse);
+  }
+
   dispose() async {
     await _userPostsFetcher.drain();
     _userPostsFetcher.close();
@@ -46,6 +54,8 @@ class PostBloc {
     _postDetailsFecther.close();
     await _explorePostFetcher.drain();
     _explorePostFetcher.close();
+    await _postCommentsFecther.drain();
+    _postCommentsFecther.close();
   }
 
 }

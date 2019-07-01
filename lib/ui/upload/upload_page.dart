@@ -194,7 +194,8 @@ class _UploadPageState extends State<UploadPage> {
           SizedBox(width: 8.0,),
           Expanded(
             child: TextField(
-              keyboardType: TextInputType.text,
+            keyboardType: TextInputType.multiline,
+            maxLines: 3,
               autofocus: false,
               decoration: new InputDecoration(
                 contentPadding: EdgeInsets.all(8.0),
