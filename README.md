@@ -9,7 +9,9 @@ An Instagram clone written in Flutter using rails REST API as backend service.
 
 ## Getting Started
 
-setup the [insta-geram-api](https://github.com/kanaydo/insta-geram-api) follow the instruction.
+Setup the [insta-geram-api](https://github.com/kanaydo/insta-geram-api) REST API and follow the instruction.
+
+Then setup the flutter project using this instruction.
 ```
 https://github.com/kanaydo/flutter-insta.git"
 cd flutter-insta
